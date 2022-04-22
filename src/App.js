@@ -1,24 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
+import { ChakraProvider } from "@chakra-ui/react";
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import Mail from "./components/Mail";
+import { getMail } from "./Redux/action";
 
 function App() {
+  const dispatch = useDispatch();
+  const [AllMail, setAllMail] = useState([]);
+  useEffect(() => {
+    getAPIMail();
+  }, []);
+  const getAPIMail = () => {
+    fetch("https://run.mocky.io/v3/15a3a1c3-1cda-4409-b1b1-2f39f5f25123")
+      .then((res) => res.json())
+      .then((data) => {
+        dispatch(getMail(data));
+        setAllMail(data);
+      });
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ChakraProvider>
+      <div>
+        <Mail AllMail={AllMail} />
+      </div>
+    </ChakraProvider>
   );
 }
 
