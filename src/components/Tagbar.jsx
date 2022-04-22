@@ -2,15 +2,20 @@ import { Box, StackDivider, VStack } from "@chakra-ui/react";
 import React, { Fragment, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setTag } from "../Redux/action";
+const onloadtag = JSON.parse(localStorage.getItem("tag")) || "inbox";
 const Tagbar = () => {
   const dispatch = useDispatch();
   const TagNames = ["All", "inbox", "draft", "spam", "trash"];
-  const [clicked, SetClicked] = useState(localStorage.getItem("tag") || 1);
-  console.log(localStorage.getItem("tag"));
-  let handleClick = (index) => {
-    SetClicked(index);
-    localStorage.setItem("tag", index);
-    dispatch(setTag(TagNames[index]));
+
+  const [clicked, SetClicked] = useState(onloadtag);
+
+  useEffect(() => {
+    dispatch(setTag(onloadtag));
+  }, [dispatch]);
+  let handleClick = (tag) => {
+    SetClicked(tag);
+    dispatch(setTag(tag));
+    localStorage.setItem("tag", JSON.stringify(tag));
   };
 
   return (
@@ -28,7 +33,7 @@ const Tagbar = () => {
     >
       {TagNames.map((tag, index) => (
         <Fragment key={index}>
-          {index === clicked ? (
+          {tag === clicked ? (
             <Box
               key={tag}
               bg="gray.600"
@@ -58,7 +63,7 @@ const Tagbar = () => {
               fontWeight="semibold"
               textTransform="uppercase"
               _hover={{ bg: "gray.200" }}
-              onClick={() => handleClick(index)}
+              onClick={() => handleClick(tag)}
             >
               {tag}
             </Box>
