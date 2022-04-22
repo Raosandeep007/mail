@@ -4,12 +4,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { setTag } from "../Redux/action";
 const Tagbar = () => {
   const dispatch = useDispatch();
-//   const ref = useRef();
   const TagNames = ["All", "inbox", "draft", "spam", "trash"];
-  const [clicked, SetClicked] = useState(1);
-
+  const [clicked, SetClicked] = useState(localStorage.getItem("tag") || 1);
+  console.log(localStorage.getItem("tag"));
   let handleClick = (index) => {
     SetClicked(index);
+    localStorage.setItem("tag", index);
     dispatch(setTag(TagNames[index]));
   };
 
@@ -40,7 +40,6 @@ const Tagbar = () => {
               textAlign="center"
               fontWeight="semibold"
               textTransform="uppercase"
-              onClick={() => handleClick(index)}
               cursor="pointer"
             >
               {tag}
