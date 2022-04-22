@@ -1,12 +1,13 @@
 import { ChakraProvider } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch } from "react-redux";
+import { Route, Routes } from "react-router-dom";
 import Mail from "./components/Mail";
+import MailBody from "./components/MailBody";
 import { getMail } from "./Redux/action";
 
 function App() {
   const dispatch = useDispatch();
-  const [AllMail, setAllMail] = useState([]);
   useEffect(() => {
     getAPIMail();
   }, []);
@@ -15,15 +16,15 @@ function App() {
       .then((res) => res.json())
       .then((data) => {
         dispatch(getMail(data));
-        setAllMail(data);
       });
   };
 
   return (
     <ChakraProvider>
       <div>
-        <Mail AllMail={AllMail} />
+        <Mail />
       </div>
+     
     </ChakraProvider>
   );
 }

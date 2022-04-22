@@ -1,14 +1,13 @@
 import { Box, StackDivider, VStack } from "@chakra-ui/react";
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setTag } from "../Redux/action";
 const Tagbar = () => {
   const dispatch = useDispatch();
-  const TagNames = ["inbox", "draft", "spam", "trash"];
-  const [clicked, SetClicked] = useState(0);
-  useEffect(() => {
-    dispatch(setTag("inbox"));
-  }, []);
+//   const ref = useRef();
+  const TagNames = ["All", "inbox", "draft", "spam", "trash"];
+  const [clicked, SetClicked] = useState(1);
+
   let handleClick = (index) => {
     SetClicked(index);
     dispatch(setTag(TagNames[index]));

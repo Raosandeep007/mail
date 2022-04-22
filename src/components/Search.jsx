@@ -9,23 +9,22 @@ import React, { useState } from "react";
 import { FcSearch } from "react-icons/fc";
 import { SiGmail } from "react-icons/si";
 import { useDispatch, useSelector } from "react-redux";
-import { setSearchMail } from "../Redux/action";
+import { useNavigate } from "react-router-dom";
+import { setSearchkey, setSearchMail } from "../Redux/action";
 const Search = () => {
-  const { mails } = useSelector((store) => store);
+  const navigate = useNavigate();
   const [search, setSearch] = useState("");
   const dispatch = useDispatch();
-  const filteredMails = mails.filter((mail) =>
-    mail.subject.toLowerCase().includes(search.toLowerCase())
-  );
+
   const handleChange = (e) => {
     setSearch(e.target.value);
   };
 
   const upadteData = (e) => {
     if (e.key === "Enter" && search !== "") {
-      dispatch(setSearchMail(filteredMails));
+      dispatch(setSearchkey(search));
     } else if (e.key === "Enter" && search === "") {
-      dispatch(setSearchMail(mails));
+      dispatch(setSearchkey(search));
     }
   };
 
@@ -46,6 +45,8 @@ const Search = () => {
         justifyContent="space-between"
         gap={7}
         alignItems="center"
+        onClick={() => navigate("/")}
+        cursor="pointer"
       >
         <SiGmail style={{ height: "50px", width: "50px" }} />
         <Text fontSize={"40px"} fontWeight="bold">

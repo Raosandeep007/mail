@@ -1,12 +1,12 @@
-import { GET_MAIL, SET_SEARCH_MAIL, SET_TAG } from "./actionType";
+import { GET_MAIL, SET_SEARCH, SET_TAG } from "./actionType";
 
 export const getMail = (payload) => ({
   type: GET_MAIL,
   payload,
 });
 
-export const setSearchMail = (payload) => ({
-  type: SET_SEARCH_MAIL,
+export const setSearchkey = (payload) => ({
+  type: SET_SEARCH,
   payload,
 });
 

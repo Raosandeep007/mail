@@ -1,11 +1,13 @@
 import { Box } from "@chakra-ui/react";
-import React from "react";
+import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
+import { Route, Routes } from "react-router-dom";
 import Display from "./Display";
+import MailBody from "./MailBody";
 import Search from "./Search";
 import Tagbar from "./Tagbar";
 
-const Mail = ({ AllMail }) => {
+const Mail = () => {
   return (
     <div style={{ width: "100vw" }}>
       <Search />
@@ -17,7 +19,10 @@ const Mail = ({ AllMail }) => {
         p="10px"
       >
         <Tagbar />
-        <Display AllMail={AllMail} />
+        <Routes>
+          <Route path="/" element={<Display />}></Route>
+          <Route path="/:id" element={<MailBody />}></Route>
+        </Routes>
       </Box>
     </div>
   );
