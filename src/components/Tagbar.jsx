@@ -1,21 +1,14 @@
 import { Box, StackDivider, VStack } from "@chakra-ui/react";
-import React, { Fragment, useEffect, useRef, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { setTag } from "../Redux/action";
-const onloadtag = JSON.parse(localStorage.getItem("tag")) || "inbox";
+import React, { useState } from "react";
+import { Link, useSearchParams } from "react-router-dom";
 const Tagbar = () => {
-  const dispatch = useDispatch();
   const TagNames = ["All", "inbox", "draft", "spam", "trash"];
+  let [qrtag, setqrTag] = useSearchParams();
+  let tag = qrtag.get("tag");
+  const [clicked, SetClicked] = useState(tag || "All");
 
-  const [clicked, SetClicked] = useState(onloadtag);
-
-  useEffect(() => {
-    dispatch(setTag(onloadtag));
-  }, [dispatch]);
   let handleClick = (tag) => {
     SetClicked(tag);
-    dispatch(setTag(tag));
-    localStorage.setItem("tag", JSON.stringify(tag));
   };
 
   return (
@@ -32,7 +25,7 @@ const Tagbar = () => {
       position="fixed"
     >
       {TagNames.map((tag, index) => (
-        <Fragment key={index}>
+        <Link key={index} to={`/tag?tag=${tag}`}>
           {tag === clicked ? (
             <Box
               key={tag}
@@ -68,7 +61,7 @@ const Tagbar = () => {
               {tag}
             </Box>
           )}
-        </Fragment>
+        </Link>
       ))}
     </VStack>
   );

@@ -1,19 +1,32 @@
-import { Box, Container, StackDivider, Text, VStack } from "@chakra-ui/react";
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Box, Text, VStack } from "@chakra-ui/react";
+import React from "react";
+import { useSelector } from "react-redux";
+import { Link, useSearchParams } from "react-router-dom";
 const Display = () => {
-  const { mails, tags, searchTerm } = useSelector((store) => store);
+  const { mails } = useSelector((store) => store);
+  let [qrtag, setqrTag] = useSearchParams();
+  let tag = qrtag.get("tag");
+  let [qrsearch, setqrsearch] = useSearchParams();
+  let search = qrsearch.get("search");
+ 
   const filteredMails = mails.filter((mail) => {
-    if (tags == "All") {
-      return mail;
+    if (tag) {
+      if (tag == "All") {
+        return mail;
+      } else {
+        return mail.tag === tag;
+      }
     } else {
-      return mail.tag === tags;
+      return mail;
     }
   });
-  const filteredMailsBySearch = filteredMails.filter((mail) =>
-    mail.subject.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const filteredMailsBySearch = filteredMails.filter((mail) => {
+    if (search) {
+      return mail.subject.toLowerCase().includes(search.toLowerCase());
+    } else {
+      return mail;
+    }
+  });
 
   return (
     <VStack
@@ -26,7 +39,7 @@ const Display = () => {
       paddingTop={20}
     >
       {filteredMailsBySearch.map((mail) => (
-        <Link to={`/${mail.id}`} key={mail.id}>
+        <Link to={`/id?id=${mail.id}`} key={mail.id}>
           <Box
             bg="blackAlpha.500"
             color="gray.100"

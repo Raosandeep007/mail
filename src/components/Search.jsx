@@ -8,13 +8,13 @@ import {
 import React, { useState } from "react";
 import { FcSearch } from "react-icons/fc";
 import { SiGmail } from "react-icons/si";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { setSearchkey, setSearchMail } from "../Redux/action";
+import { useNavigate, useSearchParams } from "react-router-dom";
 const Search = () => {
   const navigate = useNavigate();
-  const [search, setSearch] = useState("");
-  const dispatch = useDispatch();
+  let [qrsearch, setqrsearch] = useSearchParams();
+  let searchquery = qrsearch.get("search");
+  const [search, setSearch] = useState(searchquery);
+  const nav = useNavigate();
 
   const handleChange = (e) => {
     setSearch(e.target.value);
@@ -22,9 +22,9 @@ const Search = () => {
 
   const upadteData = (e) => {
     if (e.key === "Enter" && search !== "") {
-      dispatch(setSearchkey(search));
+      nav(`/search?search=${search}`);
     } else if (e.key === "Enter" && search === "") {
-      dispatch(setSearchkey(search));
+      nav(`/search?search=${search}`);
     }
   };
 
@@ -66,6 +66,7 @@ const Search = () => {
           height="60px"
           palceholder="search mail"
           fontSize="20px"
+          value={search}
           onChange={handleChange}
           onKeyUp={(e) => {
             upadteData(e);

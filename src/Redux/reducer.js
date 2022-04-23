@@ -1,9 +1,7 @@
-import { GET_MAIL, SET_SEARCH, SET_TAG } from "./actionType";
+import { GET_MAIL } from "./actionType";
 
 const init = {
   mails: [],
-  tags: "inbox",
-  searchTerm: "",
 };
 
 export const MailReducer = (store = init, { type, payload }) => {
@@ -13,16 +11,7 @@ export const MailReducer = (store = init, { type, payload }) => {
         ...store,
         mails: payload,
       };
-    case SET_SEARCH:
-      return {
-        ...store,
-        searchTerm: payload,
-      };
-    case SET_TAG:
-      return {
-        ...store,
-        tags: payload,
-      };
+
     default:
       return store;
   }

@@ -1,10 +1,11 @@
 import { Avatar, Box, Container, Text, VStack } from "@chakra-ui/react";
 import React from "react";
 import { useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 const MailBody = () => {
   const { mails } = useSelector((store) => store);
-  let { id } = useParams();
+  let [qrid, setqrId] = useSearchParams();
+  let id = qrid.get("id");
   const filteredMails = mails.filter((mail) => mail.id == id);
 
   return (

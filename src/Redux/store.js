@@ -1,4 +1,4 @@
-import { applyMiddleware, compose } from "redux";
+import { applyMiddleware } from "redux";
 import { createStore } from "redux";
 import { MailReducer } from "./reducer";
 import thunk from "redux-thunk";
