@@ -1,9 +1,7 @@
 import { ChakraProvider } from "@chakra-ui/react";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { Route, Routes } from "react-router-dom";
 import Mail from "./components/Mail";
-import MailBody from "./components/MailBody";
 import { getMail } from "./Redux/action";
 
 function App() {
