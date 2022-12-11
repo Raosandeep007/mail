@@ -21,9 +21,7 @@ const Search = () => {
   };
 
   const upadteData = (e) => {
-    if (e.key === "Enter" && search !== "") {
-      nav(`/search?search=${search}`);
-    } else if (e.key === "Enter" && search === "") {
+    if (e.key === "Enter") {
       nav(`/search?search=${search}`);
     }
   };
@@ -64,7 +62,6 @@ const Search = () => {
           variant="filled"
           placeholder="search mail"
           height="60px"
-          palceholder="search mail"
           fontSize="20px"
           value={search}
           onChange={handleChange}
